@@ -1,0 +1,229 @@
+/* Definirea paletei de culori (nuanțe de albastru) */
+:root {
+    --albastru-fundal: #F0F4F8;     /* Un albastru foarte foarte deschis pentru fundal */
+    --albastru-inchis: #102A43;     /* Albastru marin pentru textul principal */
+    --albastru-mediu: #243B53;      /* Pentru subtitluri și meniu */
+    --albastru-accent: #334E68;     /* Accente mai subtile */
+    --albastru-buton: #2680C2;      /* Albastru vibrant pentru linkuri/butoane */
+    --albastru-buton-hover: #186299;
+}
+
+/* Resetare generală */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--albastru-fundal);
+    color: var(--albastru-inchis);
+    line-height: 1.6;
+    text-align: left; /* Ne asigurăm că nimic nu e pe mijloc implicit */
+}
+
+/* Navigare */
+.bara-navigare {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    background-color: var(--albastru-inchis);
+    color: white;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.lista-navigare {
+    list-style: none;
+    display: flex;
+    gap: 30px;
+}
+
+.lista-navigare a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s;
+}
+
+.lista-navigare a:hover {
+    color: #90CDF4; /* Un albastru deschis la trecerea mouse-ului */
+}
+
+/* Secțiuni și containere */
+.continut-principal {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.sectiune {
+    margin-bottom: 60px;
+}
+
+.titlu-sectiune {
+    font-size: 2rem;
+    color: var(--albastru-mediu);
+    margin-bottom: 30px;
+    border-left: 5px solid var(--albastru-buton);
+    padding-left: 15px; /* Adaugă un element de design frumos la stânga */
+}
+
+.despartitor {
+    border: 0;
+    height: 1px;
+    background: #D9E2EC;
+    margin: 40px 0;
+}
+
+/* ---- SECȚIUNEA PROFIL (Desktop: Text stânga, Poza dreapta) ---- */
+.container-profil {
+    display: flex;
+    flex-direction: row; /* Pe orizontală pe laptop */
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 50px;
+}
+
+.text-profil {
+    flex: 1; /* Ocupă spațiul rămas */
+}
+
+.text-profil h1 {
+    font-size: 3rem;
+    color: var(--albastru-inchis);
+    margin-bottom: 10px;
+}
+
+.subtitlu-profil {
+    font-size: 1.5rem;
+    color: var(--albastru-buton);
+    margin-bottom: 20px;
+}
+
+.text-profil p {
+    font-size: 1.1rem;
+    color: var(--albastru-accent);
+}
+
+/* Setările exacte pentru poza ta (3/4 portret) */
+.poza-profil {
+    width: 220px;
+    aspect-ratio: 3 / 4; /* Raportul exact portret */
+    object-fit: cover; /* Taie poza proporțional */
+    border-radius: 8px;
+    box-shadow: 10px 10px 0px var(--albastru-buton); /* Umbră albastră de efect */
+}
+
+/* ---- EDUCAȚIE ȘI EXPERIENȚĂ ---- */
+.lista-cronologica {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.element-cronologic {
+    background: white;
+    padding: 20px;
+    border-left: 4px solid var(--albastru-mediu);
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+.titlu-job {
+    font-size: 1.2rem;
+    color: var(--albastru-inchis);
+}
+
+.detalii-job {
+    font-size: 0.95rem;
+    color: var(--albastru-accent);
+    margin-top: 5px;
+}
+
+/* ---- PORTOFOLIU GRILĂ ---- */
+.mesaj-alerta {
+    color: var(--albastru-buton);
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+.grila-proiecte {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 25px;
+}
+
+.card-proiect {
+    background: white;
+    padding: 25px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    transition: transform 0.3s;
+    border-top: 4px solid var(--albastru-buton);
+}
+
+.card-proiect:hover {
+    transform: translateY(-5px);
+}
+
+.card-proiect h3 {
+    color: var(--albastru-inchis);
+    margin-bottom: 10px;
+}
+
+.card-proiect p {
+    font-size: 0.95rem;
+    color: var(--albastru-accent);
+    margin-bottom: 15px;
+}
+
+.eticheta-limbaj {
+    font-weight: bold;
+    color: var(--albastru-mediu);
+}
+
+.buton-cod {
+    display: inline-block;
+    margin-top: 15px;
+    padding: 10px 20px;
+    background-color: var(--albastru-buton);
+    color: white;
+    text-decoration: none;
+    border-radius: 5px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+}
+
+.buton-cod:hover {
+    background-color: var(--albastru-buton-hover);
+}
+
+/* ---- RESPONSIVITATE (Pentru Telefon și Tabletă) ---- */
+@media (max-width: 768px) {
+    .container-profil {
+        flex-direction: column-reverse; /* Așezare verticală: poza sus, textul dedesubt */
+        align-items: flex-start; /* Textul de mai jos rămâne aliniat la stânga, NU pe mijloc */
+        gap: 35px;
+    }
+
+    .poza-profil {
+        width: 55%; /* Poza devine mai micuță pe ecranul telefonului/tabletei */
+        max-width: 220px; /* Ne asigurăm că pe tabletă nu se întinde prea mult */
+        align-self: center; /* MODIFICARE: Aliniază DOAR poza pe mijlocul ecranului */
+        box-shadow: 6px 6px 0px var(--albastru-buton); /* O umbră puțin mai fină, adaptată dimensiunii */
+    }
+
+    .bara-navigare {
+        flex-direction: column;
+        gap: 15px;
+        padding: 20px;
+    }
+
+    .text-profil h1 {
+        font-size: 2.2rem;
+    }
+}
