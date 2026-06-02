@@ -1,14 +1,12 @@
-/* Definirea paletei de culori (nuanțe de albastru) */
 :root {
-    --albastru-fundal: #F0F4F8;     /* Un albastru foarte foarte deschis pentru fundal */
-    --albastru-inchis: #102A43;     /* Albastru marin pentru textul principal */
-    --albastru-mediu: #243B53;      /* Pentru subtitluri și meniu */
-    --albastru-accent: #334E68;     /* Accente mai subtile */
-    --albastru-buton: #2680C2;      /* Albastru vibrant pentru linkuri/butoane */
+    --albastru-fundal: #F0F4F8;     /* albastru foarte foarte deschis pentru fundal */
+    --albastru-inchis: #102A43;     /* albastru inchis pentru textul principal */
+    --albastru-mediu: #243B53;      /* pt subtitluri, meniu */
+    --albastru-accent: #334E68;     /* accente mai subtile */
+    --albastru-buton: #2680C2;      /* albastru vibrant pentru linkuri/butoane */
     --albastru-buton-hover: #186299;
 }
 
-/* Resetare generală */
 * {
     margin: 0;
     padding: 0;
@@ -20,10 +18,9 @@ body {
     background-color: var(--albastru-fundal);
     color: var(--albastru-inchis);
     line-height: 1.6;
-    text-align: left; /* Ne asigurăm că nimic nu e pe mijloc implicit */
+    text-align: left; 
 }
 
-/* Navigare */
 .bara-navigare {
     display: flex;
     justify-content: space-between;
@@ -50,10 +47,9 @@ body {
 }
 
 .lista-navigare a:hover {
-    color: #90CDF4; /* Un albastru deschis la trecerea mouse-ului */
+    color: #90CDF4; 
 }
 
-/* Secțiuni și containere */
 .continut-principal {
     max-width: 1100px;
     margin: 0 auto;
@@ -68,8 +64,8 @@ body {
     font-size: 2rem;
     color: var(--albastru-mediu);
     margin-bottom: 30px;
-    border-left: 5px solid var(--albastru-buton);
-    padding-left: 15px; /* Adaugă un element de design frumos la stânga */
+    border-left: 5px solid var(--albastru-buton); /* mica bordura la stanga pentru design */
+    padding-left: 15px; 
 }
 
 .despartitor {
@@ -79,17 +75,17 @@ body {
     margin: 40px 0;
 }
 
-/* ---- SECȚIUNEA PROFIL (Desktop: Text stânga, Poza dreapta) ---- */
+/* ----------- SECTIUNEA PROFIL (desktop: text stanga, poza dreapta) ------------------ */
 .container-profil {
     display: flex;
-    flex-direction: row; /* Pe orizontală pe laptop */
+    flex-direction: row; /* pe orizontala pe laptop */
     justify-content: space-between;
     align-items: flex-start;
     gap: 50px;
 }
 
 .text-profil {
-    flex: 1; /* Ocupă spațiul rămas */
+    flex: 1; /* ocupa spatiul ramas */
 }
 
 .text-profil h1 {
@@ -109,16 +105,15 @@ body {
     color: var(--albastru-accent);
 }
 
-/* Setările exacte pentru poza ta (3/4 portret) */
 .poza-profil {
     width: 220px;
-    aspect-ratio: 3 / 4; /* Raportul exact portret */
-    object-fit: cover; /* Taie poza proporțional */
+    aspect-ratio: 3 / 4; 
+    object-fit: cover; /* taie poza proportional */
     border-radius: 8px;
-    box-shadow: 10px 10px 0px var(--albastru-buton); /* Umbră albastră de efect */
+    box-shadow: 10px 10px 0px var(--albastru-buton); /* umbra albastra */
 }
 
-/* ---- EDUCAȚIE ȘI EXPERIENȚĂ ---- */
+/* ---------------------- EDUCATIE SI EXPERIENTA ------------------------------------- */
 .lista-cronologica {
     display: flex;
     flex-direction: column;
@@ -144,7 +139,7 @@ body {
     margin-top: 5px;
 }
 
-/* ---- PORTOFOLIU GRILĂ ---- */
+/* ------------------- PORTOFOLIU ----------------------------------------------------- */
 .mesaj-alerta {
     color: var(--albastru-buton);
     margin-bottom: 20px;
@@ -164,6 +159,10 @@ body {
     box-shadow: 0 4px 6px rgba(0,0,0,0.05);
     transition: transform 0.3s;
     border-top: 4px solid var(--albastru-buton);
+    /*ca sa stea butonul in josul cardului:*/
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .card-proiect:hover {
@@ -188,7 +187,8 @@ body {
 
 .buton-cod {
     display: inline-block;
-    margin-top: 15px;
+    margin-top: auto; /* impinge butonul la baza cardului */
+    align-self: flex-start; /* latimea butonului cat textul din el */
     padding: 10px 20px;
     background-color: var(--albastru-buton);
     color: white;
@@ -202,19 +202,63 @@ body {
     background-color: var(--albastru-buton-hover);
 }
 
-/* ---- RESPONSIVITATE (Pentru Telefon și Tabletă) ---- */
+/*bara de cautare: */
+.container-cautare {
+    margin-bottom: 25px;
+}
+
+#bara-cautare {
+    width: 100%;
+    max-width: 400px; /* sa nu fie prea lunga */
+    padding: 12px 15px;
+    border: 2px solid var(--albastru-mediu);
+    border-radius: 6px;
+    font-size: 1rem;
+    color: var(--albastru-inchis);
+    outline: none; 
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
+
+#bara-cautare:focus {
+    border-color: var(--albastru-buton);
+    box-shadow: 0 0 8px rgba(38, 128, 194, 0.4); /* stralucire bordura la click */
+}
+
+/* buton dezactivat (cand nu avem linkuri la cod): */
+.buton-dezactivat {
+    background-color: #cbd5e1; 
+    color: #64748b;
+    /* cursor: not-allowed; */ /*apare semn de interzis dar trebuie sa stergem urmatoarea linie: */
+    pointer-events: none; /*blocheaza orice click*/
+}
+
+/* buton load more: */
+.container-actiune {
+    text-align: center;
+    margin-top: 40px;
+}
+
+#buton-load-more {
+    font-size: 1.1rem;
+    padding: 12px 30px;
+    cursor: pointer;
+    border: none; 
+}
+
+
+/* ---------------------- RESPONSIVITATE --------------------------------------- */
 @media (max-width: 768px) {
     .container-profil {
-        flex-direction: column-reverse; /* Așezare verticală: poza sus, textul dedesubt */
-        align-items: flex-start; /* Textul de mai jos rămâne aliniat la stânga, NU pe mijloc */
+        flex-direction: column-reverse; /* poza sus, textul dedesubt */
+        align-items: flex-start; /* textul aliniat la stânga */
         gap: 35px;
     }
 
     .poza-profil {
-        width: 55%; /* Poza devine mai micuță pe ecranul telefonului/tabletei */
-        max-width: 220px; /* Ne asigurăm că pe tabletă nu se întinde prea mult */
-        align-self: center; /* MODIFICARE: Aliniază DOAR poza pe mijlocul ecranului */
-        box-shadow: 6px 6px 0px var(--albastru-buton); /* O umbră puțin mai fină, adaptată dimensiunii */
+        width: 55%; /* poza devine mai micuta */
+        max-width: 220px; /* sa nu depaseasca */
+        align-self: center; /* aliniaza poza pe mijloc */
+        box-shadow: 6px 6px 0px var(--albastru-buton); /* umbra mai fina */
     }
 
     .bara-navigare {

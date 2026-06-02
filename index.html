@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dynamic Portfolio | Elena-Teodora Puia</title>
+    <title>Elena-Teodora Puia | Dynamic Portfolio</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -53,9 +53,16 @@
 
         <section id="portofoliu" class="sectiune">
             <h2 class="titlu-sectiune">My Portfolio</h2>
+            <p id="mesaj-incarcare" class="mesaj-alerta" style="display: none;">⏳ Loading projects...</p>
             <p id="mesaj-portofoliu" class="mesaj-alerta"></p> 
+            <div class="container-cautare">
+                <input type="text" id="bara-cautare" placeholder="Search by name or language (e.g., C++)...">
+            </div>
             <div id="container-proiecte" class="grila-proiecte">
                 </div>
+            <div class="container-actiune">
+                <button id="buton-load-more" class="buton-cod" style="display: none;">Load More</button>
+            </div>
         </section>
     </main>
 

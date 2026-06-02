@@ -1,12 +1,15 @@
-// Variabile pentru configurare
 const numeUtilizator = 'elenateodorapuia-creator';
 const urlApi = `https://api.github.com/users/${numeUtilizator}/repos`;
 
-// Selectarea elementelor din HTML folosind ID-urile în română
 const containerProiecte = document.getElementById('container-proiecte');
 const mesajPortofoliu = document.getElementById('mesaj-portofoliu');
+const mesajIncarcare = document.getElementById('mesaj-incarcare');
+const baraCautare = document.getElementById('bara-cautare');
+const butonLoadMore = document.getElementById('buton-load-more');
 
-// Date de rezervă (Hardcoded JSON) traduse în engleză pentru consistența paginii
+let listaCurentaDeProiecte = []; 
+let limitaAfisare = 6;
+
 const proiecteDeRezerva = [
     { 
         name: "Ludo Game Application", 
@@ -47,69 +50,103 @@ const proiecteDeRezerva = [
         stargazers_count: 0, 
         forks_count: 0, 
         html_url: "#" 
-    }
+    },
+    { name: "Proiect Extra 1", description: "Acesta este un proiect de test pentru a verifica butonul de Load More.", language: "Java", stargazers_count: 0, forks_count: 0, html_url: "#" },
+    { name: "Proiect Extra 2", description: "Alt proiect de test pentru paginare.", language: "HTML", stargazers_count: 0, forks_count: 0, html_url: "#" }
 ];
 
-// Funcție asincronă pentru a aduce datele de pe GitHub
 async function preiaProiecteGitHub() {
     try {
-        // Facem request-ul către API
+        mesajIncarcare.style.display = 'block'; // mesaj loading
+        // request la api
         const raspuns = await fetch(urlApi);
-        
-        // Dacă a picat ceva (ex: limită de 60 requesturi atinsă)
         if (!raspuns.ok) {
             throw new Error('Eroare la preluarea datelor API.');
         }
+        // transformam in JSON
+        let proiecteGitHub = await raspuns.json();
+        proiecteGitHub = proiecteGitHub.filter(proiect => proiect.fork === false); // filtrare
+        proiecteGitHub.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at)); // sortare
 
-        // Transformăm răspunsul în JSON
-        const proiecteGitHub = await raspuns.json();
+        mesajIncarcare.style.display = 'none'; // ascundem mesaj loading
 
-        // Condiție cerută de profesor: Dacă sunt mai puțin de 5 proiecte
         if (proiecteGitHub.length < 5) {
             mesajPortofoliu.innerText = "Found less than 5 public projects on GitHub. Displaying extended portfolio data:";
-            afiseazaProiecte(proiecteDeRezerva);
+            listaCurentaDeProiecte = proiecteDeRezerva;
         } else {
-             //Dacă ai 5 sau mai multe, le tăiem doar pe primele 5 și le afișăm
-            const primeleCinciProiecte = proiecteGitHub.slice(0, 5);
-            afiseazaProiecte(primeleCinciProiecte);
+            listaCurentaDeProiecte = proiecteGitHub;
         }
+        afiseazaProiecte(listaCurentaDeProiecte);
+        limitaAfisare = 6;
         //afiseazaProiecte(proiecteGitHub);
 
     } catch (eroare) {
-        // Dacă dă eroare (ex: nu ai internet), intrăm aici automat
+        mesajIncarcare.style.display = 'none';
         mesajPortofoliu.innerText = "Could not connect to GitHub API. Loading local backup projects:";
-        afiseazaProiecte(proiecteDeRezerva);
+        listaCurentaDeProiecte = proiecteDeRezerva;
+        limitaAfisare = 6;
+        afiseazaProiecte(listaCurentaDeProiecte);
     }
 }
 
-// Funcție care primește un array de proiecte și construiește cardurile pe ecran
 function afiseazaProiecte(listaProiecte) {
-    // Golim containerul pentru orice eventualitate
+    // golim container 
     containerProiecte.innerHTML = '';
+    const proiecteDeAfisat = listaProiecte.slice(0, limitaAfisare);
 
-    // Parcurgem fiecare proiect din lista primită
-    listaProiecte.forEach(proiect => {
-        // Creăm o cutie de tip <div> pentru fiecare card
+    proiecteDeAfisat.forEach(proiect => {
         const card = document.createElement('div');
-        card.className = 'card-proiect'; // Îi dăm clasa din CSS
+        card.className = 'card-proiect'; 
 
-        // Verificăm dacă proiectul are descriere, dacă nu, punem textul default cerut de prof
         const descriereProiect = proiect.description ? proiect.description : "No description available.";
         const limbajProiect = proiect.language ? proiect.language : "Not specified";
 
-        // Introducem HTML-ul cardului
+        let butonSursa = '';
+        if (proiect.html_url === '#' || !proiect.html_url) {
+            butonSursa = `<span class="buton-cod buton-dezactivat">Private Code</span>`;
+        } else {
+            butonSursa = `<a href="${proiect.html_url}" target="_blank" class="buton-cod">View Code</a>`;
+        }
+
+        // HTML-ul cardului:
         card.innerHTML = `
             <h3>${proiect.name}</h3>
             <p>${descriereProiect}</p>
             <p><span class="eticheta-limbaj">Language:</span> ${limbajProiect}</p>
             <p>⭐ ${proiect.stargazers_count} | 🍴 ${proiect.forks_count}</p>
-            <a href="${proiect.html_url}" target="_blank" class="buton-cod">View Code</a>
+            ${butonSursa}
         `;
-        
-        // Atașăm cardul creat în containerul principal
         containerProiecte.appendChild(card);
     });
+    if (listaProiecte.length > limitaAfisare) {
+        butonLoadMore.style.display = 'inline-block';
+    } else {
+        butonLoadMore.style.display = 'none';
+    }
 }
 
-// Când se încarcă fișierul JS, apelăm funcția principală
+butonLoadMore.addEventListener('click', () => {
+    limitaAfisare += 6; 
+    // in cazul in care utilizatorul a cautat ceva si are mai mult de 6 potriviri:
+    const textCautat = baraCautare.value.toLowerCase();
+    const proiecteFiltrate = listaCurentaDeProiecte.filter(proiect => {
+        const nume = proiect.name.toLowerCase();
+        const limbaj = proiect.language ? proiect.language.toLowerCase() : "";
+        return nume.includes(textCautat) || limbaj.includes(textCautat);
+    });
+    afiseazaProiecte(proiecteFiltrate);
+});
+
+// bara de cautare:
+baraCautare.addEventListener('input', (eveniment) => {
+    limitaAfisare = 6;
+    const textCautat = eveniment.target.value.toLowerCase(); // sa nu fie case sensitive
+    const proiecteFiltrate = listaCurentaDeProiecte.filter(proiect => {
+        const nume = proiect.name.toLowerCase();
+        const limbaj = proiect.language ? proiect.language.toLowerCase() : "";
+        return nume.includes(textCautat) || limbaj.includes(textCautat);
+    });
+    afiseazaProiecte(proiecteFiltrate);
+});
+
 preiaProiecteGitHub();
